@@ -106,6 +106,8 @@ fi
 SETUP_ENV=()
 SETUP_ENV+=("HAPPIER_SERVER_HOST=${SERVER_HOST}")
 SETUP_ENV+=("HAPPIER_STACK_BIND_MODE=${SETUP_BIND}")
+# redis-memory-server postinstall can fail in unprivileged LXC; not required for production runtime.
+SETUP_ENV+=("REDISMS_DISABLE_POSTINSTALL=true")
 if [[ "${INSTALL_TYPE}" == "server_only" ]]; then
   SETUP_ENV+=("HAPPIER_STACK_DAEMON=0")
 fi
