@@ -128,8 +128,12 @@ if [[ "${SERVE_UI}" != "1" ]]; then
 fi
 
 msg_info "Installing Happier (hstack setup)"
-sudo -u happier -H env "${SETUP_ENV[@]}" \
-  npx --yes -p @happier-dev/stack@latest hstack setup "${SETUP_ARGS[@]}" </dev/null
+(
+  # Avoid sudo inheriting an inaccessible cwd (e.g. /root) for the happier user.
+  cd /home/happier
+  sudo -u happier -H env "${SETUP_ENV[@]}" \
+    npx --yes -p @happier-dev/stack@latest hstack setup "${SETUP_ARGS[@]}" </dev/null
+)
 msg_ok "Installed Happier (hstack setup)"
 
 # Resolve actual hstack binary and paths. Some setups may not use the default stack/workdir.
