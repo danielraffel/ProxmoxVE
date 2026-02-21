@@ -306,6 +306,10 @@ elif [[ "${REMOTE_ACCESS}" == "tailscale" ]]; then
     echo -e "${INFO}${YW} Tailscale Serve:${CL} was attempted but no HTTPS URL was detected yet."
     echo -e "${TAB}${YW}Try again in a minute:${CL}"
     echo -e "${TAB}${GATEWAY}${BGN}su - happier -c \"${HSTACK_BIN} tailscale url\"${CL}"
+    echo -e "${TAB}${YW}If still missing, reset/recreate Serve mapping:${CL}"
+    echo -e "${TAB}${GATEWAY}${BGN}tailscale serve reset${CL}"
+    echo -e "${TAB}${GATEWAY}${BGN}tailscale serve --bg http://127.0.0.1:3005${CL}"
+    echo -e "${TAB}${GATEWAY}${BGN}tailscale serve status${CL}"
   fi
 fi
 echo -e "${INFO}${YW} Next steps:${CL}"
