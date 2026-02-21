@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Default to this fork/branch so plain raw URL execution works without extra env vars.
 INSTALLER_REPO="${INSTALLER_REPO:-danielraffel/ProxmoxVE}"
-INSTALLER_REF="${INSTALLER_REF:-fix/happier-installer-fork-links}"
+# raw.githubusercontent branch refs containing '/' should be URL-encoded.
+INSTALLER_REF="${INSTALLER_REF:-fix%2Fhappier-installer-fork-links}"
 source <(curl -fsSL "https://raw.githubusercontent.com/${INSTALLER_REPO}/${INSTALLER_REF}/misc/build.func")
 # Copyright (c) 2021-2026 community-scripts ORG
 # Author: happier-dev
