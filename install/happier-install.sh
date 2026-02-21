@@ -231,6 +231,12 @@ if [[ "${REMOTE_ACCESS}" == "tailscale" ]]; then
   systemctl enable -q --now tailscaled
   msg_ok "Installed Tailscale"
 
+  # Pin the binary path to avoid shell/MOTD output polluting command-path resolution.
+  TAILSCALE_BIN="$(command -v tailscale 2>/dev/null || true)"
+  [[ -z "$TAILSCALE_BIN" ]] && TAILSCALE_BIN="/usr/bin/tailscale"
+  set_env_kv "$STACK_ENV_FILE" "HAPPIER_STACK_TAILSCALE_BIN" "$TAILSCALE_BIN"
+  set_env_kv "$STACK_ENV_FILE" "HAPPIER_STACK_TAILSCALE_SERVE" "1"
+
   if [[ -n "${TAILSCALE_AUTHKEY}" ]]; then
     msg_info "Enrolling Tailscale (pre-auth key)"
     tailscale up --auth-key="${TAILSCALE_AUTHKEY}" >/dev/null 2>&1 || true
